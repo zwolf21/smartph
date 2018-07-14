@@ -7,7 +7,7 @@ from django_pandas.io import read_frame
 import pandas as pd
 import numpy as np
 
-from utils.shortcuts import csv2array, classinit
+from utils.shortcuts import csv2array, classinit, findsim
 
 
 REMAIN_ORDER_COLUMN_NAME = '처방잔량'
@@ -29,8 +29,10 @@ class OpremainDataFrame(object):
 
     def __init__(self, config, excel_io):
         namemaps = config.namemap_set.all()
-        Narcotic = namemaps.first().mapping_to.__class__
+        if not namemaps:
+            raise ValueError('매칭된 품목이 하나도 없습니다.')
 
+        Narcotic = namemaps.first().mapping_to.__class__
         self.config = config
         self.df_namemaps = read_frame(namemaps)
         self.df_op = pd.read_excel(excel_io, ignore_index=True)
@@ -42,8 +44,9 @@ class OpremainDataFrame(object):
         valid_columns = []
         columns = csv2array(getattr(self.config, attr_nm))
         for colnm in columns:
-            if colnm in self.df_op.columns:
-                valid_columns.append(colnm)
+            find_colnm = findsim(colnm, self.df_op.columns)
+            if find_colnm is not None:
+                valid_columns.append(find_colnm)
         return valid_columns
     
     def _get_mapped_op(self):

@@ -1,6 +1,7 @@
 from django.db import models
-
 from django.conf import settings
+from django.urls import reverse
+
 
 
 class Narcotic(models.Model):
@@ -26,11 +27,12 @@ class Narcotic(models.Model):
 
 
 class Config(models.Model):
+    title = models.CharField('설정제목', max_length=255, unique=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     key_column = models.CharField('약품명컬럼명', max_length=50)
     not_null_columns = models.CharField('필수컬럼', max_length=50, blank=True, null=True)
     order_amt_column = models.CharField('처방량(소수점단위)컬럼명', max_length=50)
-    extra_columns = models.CharField('표기할컬럼', max_length=255)
+    extra_columns = models.TextField('표기할컬럼(순서)', blank=True, null=True)
     orderby_columns = models.CharField('정렬기준컬럼', max_length=255, blank=True, null=True)
     activated = models.BooleanField('사용중', default=True)
     created = models.DateField(auto_now_add=True)
@@ -41,7 +43,10 @@ class Config(models.Model):
         verbose_name_plural = '설정'
 
     def __str__(self):
-        return "/".join(filter(None, [self.user.username, self.key_column, self.order_amt_column]))
+        return "/".join(filter(None, [self.title, self.user.username]))
+
+    def get_absolute_url(self):
+        return reverse('opremain:config-detail', kwargs={'pk': self.pk})
 
 
 class NameMap(models.Model):

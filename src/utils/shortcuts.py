@@ -67,3 +67,21 @@ def classinit(attrs):
             setattr(cls, key, val)
         return cls
     return wrapper
+
+
+def findsim(value: str, arr: list):
+	matched = []
+	value = value.strip()
+	arr = map(str.strip, arr)
+	for item in arr:
+		if not isinstance(item, str):
+			continue
+		if item == value:
+			return item
+		elif value in item or item in value:
+			matched.append(item)
+	
+	if len(matched) == 0:
+		return None
+	else:
+		return min(matched, key=len)

@@ -12,12 +12,12 @@ class NarcoticAdmin(NarcoticImportExportAdmin, admin.ModelAdmin):
 
 @admin.register(Config)
 class ConfigAdmin(admin.ModelAdmin):
-    list_display = 'user', 'key_column', 'order_amt_column', 'orderby_columns', 'not_null_columns', 'activated',
-    list_filter = 'user', 'activated', 'updated', 'created',
+    list_display = 'title', 'key_column', 'order_amt_column', 'orderby_columns', 'not_null_columns', 'activated',
+    list_filter = 'user', 'activated', 'updated', 'created', 
 
 
 @admin.register(NameMap)
 class NameMapAdmin(admin.ModelAdmin):
     list_display = 'current_name', 'mapping_to',
-    list_filter = 'updated', 'created',
+    list_filter = 'config', 'updated', 'created',
     autocomplete_fields = 'mapping_to',
