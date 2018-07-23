@@ -9,12 +9,11 @@ class NarcoticResource(resources.ModelResource):
     class Meta:
         model = Narcotic
         fields = [
-            "narcotic_name", "amt", "company_name", "keyword", "sub_keyword",
-            "full_amt_exp", "amt_volum_exp", "amt_weight_exp", "unit"        
+            "narcotic_name","keyword","sub_keyword","company_keyword","full_amt_exp","amt_volum_exp","amt_weight_exp","pct_exp",
+            "amt_ml","amt_mg","edi_code","price","narcotic_class","shape", "unit"
         ]
         import_id_fields = "narcotic_name",
 
 
 class NarcoticImportExportAdmin(ImportExportModelAdmin):
     resource_class = NarcoticResource
-

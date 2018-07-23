@@ -1,0 +1,46 @@
+<div class="row">
+    {% for object in object_list  %}
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="text-center">설정명</th>
+                    <th rowspan="2" class="text-center">약품명컬럼</th>
+                    <th rowspan="2" class="text-center">처방량컬럼</th>
+                    <th rowspan="2" class="text-center">필수컬럼</th>
+                    <th class="text-center" colspan="3">매핑정보</th>
+                </tr>
+                <tr>
+                    <th class="text-center">유효항목</th>
+                    <th class="text-center">제외항목</th>
+                    <th class="text-center">총항목</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center" rowspan="3">
+                        {% if object.activated %}
+                            <a href="#">{{ object.title }}</a><br>
+                            (사용중)
+                        {% else %}
+                            <a href="#">{{ object.title }}</a><br>
+                            (사용안함)
+                        {% endif %}
+                    </td>
+                    <td class="text-center">{{ object.key_column }}</td>
+                    <td class="text-center">{{ object.order_amt_column }}</td>
+                    <td class="text-center">{{ object.not_null_columns }}</td>
+                    <td class="text-center">{{ object.get_valid_namemap_set|length }}</td>
+                    <td class="text-center">{{ object.get_excepted_namemap_set|length }}</td>
+                    <td class="text-center">{{ object.namemap_set.all|length }}</td>
+                </tr>
+                <tr>
+                    <th colspan="6" class="text-center">리스트 출력시 컬럼순서</th>
+                </tr>
+                <tr>
+                    <td colspan="6" class="text-center">{{ object.extra_columns }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        {% endfor %}
+    </div>

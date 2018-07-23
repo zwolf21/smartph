@@ -6,47 +6,42 @@
 <div class="container">
     {% if object_list %}    
     <div class="row">
-        <h4 class="pl-2">현재 설정정보</h4>
+        <h4 class="pl-2">
+            현재 설정
+        </h4><br>
+        {% if 'total' in request.path %}
+            <a class="py-1" href="{% url 'opremain:config-list' %}">(돌아가기)</a>
+        {% else %}
+            <a class="py-1" href="{% url 'opremain:config-list-total' %}">(설정 전체보기)</a>
+        {% endif %}
     </div>
     <div class="row">
-        <table class="table table-sm table-bordered">
-            <thead>
-                <tr>
-                    <th>설정명</th>
-                    <th>약품명컬럼</th>
-                    <th>처방량컬럼</th>
-                    <th>정렬기준컬럼</th>
-                    <th>필수컬럼</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for object in object_list  %}
-                <tr>
-                    <td>{{ object.title }}</td>
-                    <td>{{ object.key_column }}</td>
-                    <td>{{ object.order_amt_column }}</td>
-                    <td>{{ object.orderby_columns }}</td>
-                    <td>{{ object.not_null_columns }}</td>
-                </tr>
-                <tr>
-                    <th colspan="5" class="text-center">리스트 출력시 컬럼순서</th>
-                </tr>
-                <tr>
-                    <td colspan="5" class="text-center">{{ object.extra_columns }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% url 'opremain:excel-accept' as excel_accept %}
+        {% include 'opremain/components/config_detail_table.html' with object_list=object_list %}
+        {% include "opremain/components/file_accept_form.html" with form=form action=excel_accept %}
     </div>
+    {% elif request.user.config_set.all %}
+        <div class="row">
+            <p>설정정보는 있으나 활성화된 설정정보가 없습니다.</p>
+        </div>
+        <div class="row">
+            <p>아래의 설정정보들의 이름을 클릭, 설정 수정 화면으로 가서 사용중으로 바꾸거나, 적절한 설정이 없다면,</p>
+        </div>
+        <div class="row">
+            <p class="py-2 mr-2"> 설정을 생성해야 합니다. <a href="{% url 'opremain:config-create' %}"> 설정 생성하러 가기</a></p>
+        </div>
+        {% include 'opremain/components/config_detail_table.html' with object_list=request.user.config_set.all %}
     {% else %}
-    <div class="row">
-        <p>아직 제출할 마약류 불출현황 엑셀 파일의 정보가 없습니다.</p>
-    </div>
-    <div class="row">
-        <p class="py-2 mr-2"> 설정정보를 생성해야 합니다. <a href="{% url 'opremain:config-create' %}">생성하러 가기</a></p>
-       
-    </div>
-        
+        <div class="row">
+            <p>아직 제출할 마약류 불출현황 엑셀 파일의 정보가 없습니다.</p>
+        </div>
+        <div class="row">
+            <p class="py-2 mr-2">설정정보를 생성해야 합니다. <a href="{% url 'opremain:config-create' %}">생성하러 가기</a></p>
+        </div>
     {% endif %}
+
 </div>
 {% endblock content %}
+
+
+1별관 4층 허승우

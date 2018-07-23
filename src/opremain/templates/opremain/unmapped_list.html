@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h4>아래와 같이 매핑이 승인이 안되었거나 매핑이 없는 항목들이 있습니다.</h4>
+    </div>
+    <div class="row">
+        <p>아래 항목들에 대하여 매핑작업을 통해 매핑을하거나, 앞으로 집계에서 제외 할 수 있습니다.</p>
+        <p>실제 사용중인 약품명과 통합약품명의 일치 여부를 확인하시고 승인여부에 체크하여 주십시오.</p>
+        <p>전부 승인 체크가 되어있을 시에만 진행 가능합니다.</p>
+    </div>
+
+    <form action="{% url 'opremain:config-update' form.instance.pk %}" method="post">
+        {{ formset.management_form }}
+        {% csrf_token %}
+        <div class="row">
+            <table class="col-12" border="1">
+                <thead>
+                    <tr>
+                        <th width="50%">파일에있는약품명</th>
+                        <th>통합약품명(틀릴수있음)</th>
+                        <th>집계제외</th>
+                        <th>승인</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in formset %}
+                    <tr>
+                        <td>{{ form.current_name }}</td>
+                        <td>{{ form.mapping_to }}</td>
+                        <td class="text-center">{{ form.excepted }}</td>
+                        <td class="text-center">{{ form.activated }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="col-12 text-right">
+                <button class="btn btn-success btn-sm">저장</button>
+            </div>
+        </div>
+    </form>
+   
+</div>
+{% endblock content %}

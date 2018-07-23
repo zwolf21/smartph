@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
 
 {% block content %}
 
 <div class="container">
     <div class="row">
-        
         <h4>
             마약류 엑셀컬럼 정보 입력
         </h4>
@@ -16,44 +14,10 @@
         <p>
             두개 이상의 컬럼을 입력하는 경우 쉼표로 구분하여 주십시오.
         </p>
-        <hr>
+    <hr>
     <div class="row">
         <div class="col-sm-12">
-            <form class="form" action="{% url 'opremain:config-create' %}">
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label col-form-label-sm">설정정보:</label>
-                    <div class="col-sm-10 input-group-sm">
-                        {{ form.title|attr:"class:form-control input-sm"|attr:"placeholder:예) XX병원-마약류불출내역" }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label col-form-label-sm">약품명컬럼:</label>
-                    <div class="col-sm-10 input-group-sm">
-                        {{ form.key_column|attr:"class:form-control input-sm"|attr:"placeholder:예)약품명" }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label col-form-label-sm">처방량(소수점단위):</label>
-                    <div class="col-sm-10 input-group-sm">
-                        {{ form.order_amt_column|attr:"class:form-control input-sm"|attr:"placeholder:예)처방량" }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label col-form-label-sm">필수컬럼(선택):</label>
-                    <div class="col-sm-10 input-group-sm">
-                        {{ form.not_null_columns|attr:"class:form-control input-sm"|attr:"placeholder:예)불출일자, 처방일자, 처방량등" }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label col-form-label-sm">리스트될컬럼(순서):</label>
-                    <div class="col-sm-10 input-group-sm">
-                        {{ form.extra_columns|attr:"class:form-control input-sm"|attr:"rows:1"|attr:"placeholder:예)불출일자,환자명,약품명,처방량" }}
-                    </div>
-                </div>
-                <div class="col-12 text-right">
-                    <button type="submit" class="btn btn-success btn-sm">설정정보 저장</button>
-                </div>
-            </form>
+           {% include 'opremain/components/config_curd_form.html' %}
         </div>
     </div>
 </div>

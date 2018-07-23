@@ -57,8 +57,14 @@ def sequence_fk_slugify(instance, fk_field_to_slugify, fk_lookup_field, slug_fie
 		return slug
 
 
-def csv2array(csv):
-	return re.split('[\s,]+', csv)
+def csv2array(csv, must_haveset=None):
+	if csv:
+		ret = re.split('[\s,]+', csv)
+		if must_haveset is not None:
+			return [item for item in ret if item in must_haveset]
+		else: 
+			return list(filter(None, ret))
+	return []
 
 
 def classinit(attrs):

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    {% if object_list %}    
+    <div class="row">
+        <h4 class="pl-2">
+            현재 설정
+        </h4>
+    </div>
+    <div class="row">
+        {% include "opremain/components/config_detail_table.html" %}
+    </div>
+    <div class="row">
+        {% include 'opremain/components/file_accept_form.html' %}
+    </div>
+    {% elif request.user.config_set.all %}
+        <div class="row">
+            <p>설정정보는 있으나 활성화된 설정정보가 없습니다.</p>
+        </div>
+        <div class="row">
+            <p>아래의 설정정보들의 이름을 클릭, 설정 수정 화면으로 가서 사용중으로 바꾸거나, 적절한 설정이 없다면,</p>
+        </div>
+        <div class="row">
+            <p class="py-2 mr-2"> 설정을 생성해야 합니다. <a href="#"> 설정 생성하러 가기</a></p>
+        </div>
+
+    {% else %}
+        <div class="row">
+            <p>아직 제출할 마약류 불출현황 엑셀 파일의 정보가 없습니다.</p>
+        </div>
+        <div class="row">
+            <p class="py-2 mr-2">설정정보를 생성해야 합니다. <a href="#">생성하러 가기</a></p>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock content %}

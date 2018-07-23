@@ -19,4 +19,6 @@ keys.py
 db.sqlite3
 *.ipynb
 .vscode
+*.xlsx
+test.*
 

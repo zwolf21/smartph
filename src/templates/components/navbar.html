@@ -5,7 +5,7 @@
     <div class="collapse navbar-collapse" id="main-nav-bar">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'opremain:excel-accept' %}">마약류잔량집계 <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'opremain:excel-submit' %}">마약류잔량집계 <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -18,9 +18,16 @@
                 </div>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        {% if request.user.is_active %}
+            {% if request.user.is_superuser  %}
+                <a href="{% url 'admin:index' %}">{{ request.user }}님</a>
+            {% else %}
+                {{ request.user }}님
+            {% endif %}
+            <li><a href="{% url 'accounts:logout' %}"><span class="glyphicon glyphicon-logout√"></span>로그아웃</a></li>
+            <li><a href="{% url 'accounts:password_change' %}"><span class="glyphicon glyphicon-logout√"></span>비번변경</a></li>
+        {% else %}
+            <li><a href="{% url 'accounts:login' %}"><span class="{% url 'accounts:login' %}"></span>로그인/사용자등록</a></li>
+        {% endif %}
     </div>
 </nav>

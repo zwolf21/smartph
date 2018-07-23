@@ -20,6 +20,7 @@ from .views import Home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
     path('', Home.as_view(), name='home'),
     path('opremain/', include('opremain.urls', namespace='opremain')),
 ]

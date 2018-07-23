@@ -9,3 +9,5 @@ class ObjectListMixin(object):
         else:
             context[self.object_list_name] = self.model.objects.all()
         return context
+
+
