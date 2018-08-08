@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Value, IntegerField, Count, Q
 
 from .models import Narcotic, Config, NameMap, NarcoticUseFile
-from .forms import ExcelFileAcceptForm, ConfigForm, CurrentNameFormSet, current_name_forset_builder, NameMapInlineFormset, NarcoticUseFileForm
+from .forms import ExcelFileAcceptForm, NameMapInlineFormset
 from .services.core import OpremainDataFrame
 from utils.mixins import ObjectListMixin
 
@@ -60,4 +60,15 @@ def save_mapping(request, config_pk):
         if formset.is_valid():
             formset.save()
         return redirect(reverse('opremain:excel-submit'))
+
+class ConfigCreateView(CreateView):
+    model = Config
+    fields = 'title', 'key_column', 'not_null_columns', 'order_amt_column', 'orderby_columns', 'extra_columns', 'activated',
+    success_url = reverse_lazy('opremain:excel-submit')
+
+
+class ConfigUpdateView(UpdateView):
+    model = Config
+    fields = 'title', 'key_column', 'not_null_columns', 'order_amt_column', 'orderby_columns', 'extra_columns', 'activated',
+    success_url = reverse_lazy('opremain:excel-submit')
 

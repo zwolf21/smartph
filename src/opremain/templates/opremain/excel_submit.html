@@ -6,8 +6,9 @@
     {% if object_list %}    
     <div class="row">
         <h4 class="pl-2">
-            현재 설정
+            현재 설정 
         </h4>
+        <span><a href="{% url 'opremain:config-create' %}">추가하기</a></span>
     </div>
     <div class="row">
         {% include "opremain/components/config_detail_table.html" %}

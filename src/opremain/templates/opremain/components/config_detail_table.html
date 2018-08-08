@@ -18,11 +18,10 @@
             <tbody>
                 <tr>
                     <td class="text-center" rowspan="3">
+                        <a href="{% url 'opremain:config-update' object.pk %}">{{ object.title }}</a><br>
                         {% if object.activated %}
-                            <a href="#">{{ object.title }}</a><br>
                             (사용중)
                         {% else %}
-                            <a href="#">{{ object.title }}</a><br>
                             (사용안함)
                         {% endif %}
                     </td>
